@@ -1,0 +1,58 @@
+#%RAML 1.0
+title: Gerenciamento de Contatos
+version: v1
+baseUri: http://api.meuscontatos.com/{version}
+
+types:
+  Contact:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+
+/contact:
+  get:
+    description: Retorna todos os contatos
+    responses:
+      200:
+        body:
+          application/json:
+            type: Contact[]
+  post:
+    description: Adiciona um novo contato
+    body:
+      application/json:
+        type: Contact
+    responses:
+      201:
+        body:
+          application/json:
+            type: Contact
+  /{id}:
+    get:
+      description: Retorna um contato específico pelo ID
+      responses:
+        200:
+          body:
+            application/json:
+              type: Contact
+    put:
+      description: Atualiza as informações de um contato
+      body:
+        application/json:
+          type: Contact
+      responses:
+        200:
+          body:
+            application/json:
+              type: Contact
+    delete:
+      description: Exclui um contato
+      responses:
+        204:
