@@ -23,5 +23,5 @@ export const UserSchema = new mongoose.Schema({
     address: { type: String },                      // The user's address
     phone: { type: String},                         // The user's phone number
     urlPhoto: { type: String },                     // The URL of the user's profile photo
-    contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }] // An array of Contact IDs
+    contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contacts' }] // An array of Contact IDs
 }, {timestamps: true, collection: 'users'});  // Add timestamps for create and update times, and set collection name to "users"
