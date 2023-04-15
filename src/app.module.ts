@@ -5,6 +5,9 @@ import { CategoriasModule } from './categorias/categorias.module';
 import { DesafiosModule } from './desafios/desafios.module';
 import { UsersModule } from './users/users.module';
 import { AccountsModule } from './accounts/accounts.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { ContactSchema } from './contacts/interfaces/contacts.schema';
+import { UserSchema } from './users/interfaces/users.schema';
 
 
 /**
@@ -17,12 +20,19 @@ import { AccountsModule } from './accounts/accounts.module';
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),
+    MongooseModule.forFeature([
+      { name: 'Contacts', schema: ContactSchema },
+      { name: 'User', schema: UserSchema }
+    ]),
+    ContactsModule,
+    UsersModule,
     // Import submodules
     JogadoresModule,
     CategoriasModule,
     DesafiosModule,
     UsersModule,
-    AccountsModule
+    AccountsModule,
+    ContactsModule
   ],
   controllers: [],
   providers: [],

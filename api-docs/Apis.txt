@@ -1,0 +1,50 @@
+Endpoints:
+
+Domínio de Usuário:
+
+Açoes:
+
+Cadastro de usuário: 
+    POST /api/v1/users
+Login de usuário: 
+    POST /api/v1/login
+Esqueci minha senha: 
+    POST /api/v1/forgot-password
+2FA (autenticação de dois fatores): 
+    POST /api/v1/2fa
+
+Domínio de Perfil:
+
+Atualização de perfil de usuário: 
+    PUT /api/v1/profile
+Exclusão de conta: 
+    DELETE /api/v1/profile
+Listagem de usuários: 
+    GET /api/v1/users
+
+Domínio de Transação:
+
+Criação de transação: 
+    POST /api/v1/transactions
+Listagem de transações de um usuário: 
+    GET /api/v1/users/{id}/transactions
+Listagem de todas as transações: 
+    GET /api/v1/transactions
+
+Domínio de Conta:
+
+Criação de conta bancária: 
+    POST /api/v1/accounts
+Listagem de contas bancárias de um usuário: 
+    GET /api/v1/users/{id}/accounts
+Listagem de todas as contas bancárias: 
+    GET /api/v1/accounts
+
+Domínio de Doação:
+
+Criação de doação: 
+    POST /api/v1/donations
+Listagem de doações de um usuário: 
+    GET /api/v1/users/{id}/donations
+Listagem de todas as doações: 
+    GET /api/v1/donations

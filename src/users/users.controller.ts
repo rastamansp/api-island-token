@@ -50,17 +50,22 @@ export class UsersController {
     }
 
     /**
-     * List all users
-     * 
-     * @returns An array of all user documents
-     */
-    @Get()
-    async listUsers(): Promise<User[]> {
+ * List all users
+ * 
+ * @returns An array of all user documents
+ */
+@Get()
+async listUsers(): Promise<User[]> {
+    try {
         this.logger.log(`Listing all users.`);
         const users = await this.usersService.listAllUsers();
         this.logger.log(`Found ${users.length} users.`);
-        return users;      
-    }
+        return users;
+    } catch (error) {
+        this.logger.error(`Error listing users: ${error}`);
+    }      
+}
+
 
     /**
      * Find a user by ID

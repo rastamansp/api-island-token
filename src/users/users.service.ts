@@ -11,7 +11,8 @@ import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
+    constructor(
+        @InjectModel('User') private readonly userModel: Model<User>) { }
 
     private readonly logger = new Logger(UsersService.name);
 
@@ -68,7 +69,7 @@ export class UsersService {
      */
     async listAllUsers(): Promise<User[]> {
         // List all users
-        return await this.userModel.find().exec()
+        return await this.userModel.find().populate('contacts').exec()
     }
 
     /**
@@ -79,14 +80,33 @@ export class UsersService {
      * @throws NotFoundException if no user with the specified ID is found
      */
     async findUserById(_id: string): Promise<User> {
-        // Find user by ID
-        const foundUser = await this.userModel.findOne({ _id }).exec();
+        // Find user by ID and populate the 'contacts' field with the details of the contacts
+        const foundUser = await this.userModel.findOne({ _id }).populate('contacts').exec();
 
         if (!foundUser) {
             // If no user found, throw an error
             throw new NotFoundException(`User with id ${_id} not found`)
         }
         return foundUser
+    }
+
+
+    /**
+     * Find a user by ID
+     *
+     * @param username ID of the user to find
+     * @returns The user with the specified ID
+     * @throws NotFoundException if no user with the specified ID is found
+     */
+    async findUserByUserName(username: string): Promise<User> {
+        // Find user by ID
+        const foundUser = await this.userModel.findOne({ username }).exec();
+
+        if (!foundUser) {
+            // If no user found, throw an error
+            throw new NotFoundException(`User with username ${username} not found`)
+        }
+        return foundUser;
     }
 
     /**
@@ -98,7 +118,7 @@ export class UsersService {
     async deleteUser(_id): Promise<any> {
 
         // Find user by ID
-        const foundUser = await this.userModel.findOne({ _id }).exec();
+        const foundUser = await this.userModel.findOne({ _id });
 
         if (!foundUser) {
             // If no user found, throw an error

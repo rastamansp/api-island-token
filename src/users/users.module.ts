@@ -11,7 +11,9 @@ import { UserSchema } from './interfaces/users.schema';
   /**
    * Import the MongooseModule forFeature with the User model, specifying the name and schema.
    */
-  imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema}]) ],
+  imports: [
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
+  ],
   /**
    * Declare the UsersController as a controller to be instantiated and used by the module.
    */

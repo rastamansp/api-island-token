@@ -1,10 +1,16 @@
 import { Document } from 'mongoose'
+import { Contact } from 'src/contacts/interfaces/contacts.interface';
 
 /**
  * Defines the interface for a User document in MongoDB.
  * @interface
  */
 export interface User extends Document {
+    /**
+     * The user's username, which is a non-required field.
+     * @type {string}
+     */
+    username: string;
     /**
      * The user's name, which is a non-required field.
      * @type {string}
@@ -35,4 +41,6 @@ export interface User extends Document {
      * @type {string}
      */
     urlPhoto: string;
+
+    contacts: [Contact],
 }
