@@ -9,6 +9,7 @@ export class CreateTransactionAccountDto {
      * @memberof CreateTransactionAccountDto
      */
     @IsNotEmpty()
+    @IsString()
     transaction: Number;
 
     /**
@@ -17,6 +18,7 @@ export class CreateTransactionAccountDto {
      * @memberof CreateTransactionAccountDto
      */
     @IsNotEmpty()
+    @IsString()
     sourceAccount: string;
 
     /**
@@ -25,6 +27,7 @@ export class CreateTransactionAccountDto {
      * @memberof CreateTransactionAccountDto
      */
     @IsNotEmpty()
+    @IsString()
     destinationAccount: string;
 
     /**
@@ -43,6 +46,7 @@ export class CreateTransactionAccountDto {
      * @memberof CreateTransactionAccountDto
      */
     @IsNotEmpty()
+    @IsString()
     reference: string;
 
 }

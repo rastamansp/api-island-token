@@ -2,43 +2,43 @@ import { Document } from 'mongoose';
 import { User } from 'src/users/interfaces/user.interface';
 
 /**
- * Defines the interface for a User document in MongoDB.
+ * Defines the interface for a transaction document in MongoDB.
  * @interface
  */
 export interface Transaction extends Document {
+    /**
+     * A string that identifies the transaction.
+     * @type {string}
+     */
+    transaction: string;
 
-    readonly userID: string;
     /**
-     * The Account's number, which is a non-required field.
+     * The source account ID for the transaction.
      * @type {string}
      */
-    type: string;
+    sourceAccount: string;
+
     /**
-     * The Account's number, which is a non-required field.
+     * The destination account ID for the transaction.
      * @type {string}
      */
-    description: string;
+    destinationAccount: string;
+
     /**
-     * The Account's number, which is a non-required field.
-     * @type {string}
-     */
-    transactionId: string;
-    /**
-     * The Balance's number, which is a non-required field.
-     * @type {string}
+     * The amount of the transaction, which is a non-required field.
+     * @type {number}
      */
     amount: number;
-    /**
-     * The user's Object, which is a non-required field.
-     * @type {User}
-     */
-    user: User;
-    /**
-     * The user's name, which is a non-required field.
-     * @type {Array<Transaction>}
-     */
-    readonly transactions: Array<Transaction>;
 
-    date: Date
-    
+    /**
+     * The reference for the transaction.
+     * @type {string}
+     */
+    reference: string;
+
+    /**
+     * The date of the transaction.
+     * @type {Date}
+     */
+    date: Date;
 }

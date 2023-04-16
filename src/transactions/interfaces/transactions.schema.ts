@@ -1,14 +1,11 @@
 import * as mongoose from "mongoose";
 
 export const TransactionsSchema = new mongoose.Schema({
-    userID: {type: String, unique: true},
-    balance: {type: Number},
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
-    account: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Account"
-    }
+    transaction:        {type: Number},
+    sourceAccount:      {type: String },
+    destinationAccount: {type: String },
+    amount:             {type: Number},
+    reference:          {type: String },
+    date:               {type: Date} 
+    
 }, {timestamps: true, collection: 'transactions'});

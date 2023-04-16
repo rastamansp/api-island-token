@@ -4,7 +4,6 @@ import { Account } from './interfaces/accounts.interface';
 import { AccountsService } from './accounts.service';
 import { updateAccountDto } from './dtos/update-account.dto';
 import { ValidationParamsPipe } from 'src/common/pipes/validation-params.pipe';
-import { CreateTransactionAccountDto } from './dtos/create-transaction-account.dto';
 
 @Controller('api/v1/accounts')
 export class AccountsController {
@@ -27,7 +26,6 @@ export class AccountsController {
             return account;
     }
     
-    @Get()
     /**
      * List all Accounts
      * 
@@ -56,15 +54,5 @@ export class AccountsController {
         return account;    
     }
 
-
-    @Post('/:_id/transaction')
-    @UsePipes(ValidationPipe)
-    async createTransactionAccount(
-        @Body() createTransactionAccountDto: CreateTransactionAccountDto): Promise<Account> {
-            this.logger.log(`Creating account Transaction with data: ${JSON.stringify(createTransactionAccountDto)}`);
-            const transaction = await this.accountsService.createAccountTransaction(createTransactionAccountDto);
-            this.logger.log(`Transaction Account created with ID: ${transaction._id}`);
-            return transaction;
-    }
 
 }

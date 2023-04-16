@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AccountsController } from './transactions.controller';
+import { TransactionsController } from './transactions.controller';
 import { TransactionsService } from './transactions.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TransactionsSchema } from './interfaces/transactions.schema';
 import { UsersModule } from 'src/users/users.module';
+import { AccountsModule } from 'src/accounts/accounts.module';
 
 
 /**
@@ -14,11 +15,11 @@ import { UsersModule } from 'src/users/users.module';
    * Import the MongooseModule forFeature with the Account model, specifying the name and schema.
    */
   imports: [MongooseModule.forFeature([{ name: 'Transactions', schema: TransactionsSchema }]),
-    UsersModule],
+    UsersModule, AccountsModule],
   /**
    * Declare the AccountsController as a controller to be instantiated and used by the module.
    */
-  controllers: [AccountsController],
+  controllers: [TransactionsController],
   /**
    * Declare the AccountsService as a provider to be instantiated and used by the module.
    */

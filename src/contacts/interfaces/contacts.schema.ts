@@ -15,11 +15,12 @@ import * as mongoose from 'mongoose';
  */
 // Define the schema for the User collection in MongoDB
 export const ContactSchema = new mongoose.Schema({
-    id: { type: String, unique: true},          // The contact's ID.
-    sourceUser: { type: String},                // The User's own of Contact.
-    username: { type: String},                  // The contact's username.
+    sourceUser: { type: String, unique: true},  // The User's own of Contact.
+    username: { type: String, unique: true},    // The contact's username.
     name: { type: String},                      // The contact's name.
     phone: { type: String},                     // The contact's email address, which must be unique.
     email: { type: String},                     // The contact's phone number.
     urlPhoto: { type: String},                  // The URL of the user's profile photo.
-}, {timestamps: true, collection: 'contacts'}); // Add timestamps for create and update times, and set collection name to "users"
+}, { timestamps: true, collection: 'contacts', index: { unique: true, sparse: true, name: 'sourceUser_username_index', dropDups: true, background: true, safe: true, partialFilterExpression: { sourceUser: { $exists: true }, username: { $exists: true } } } });
+// Add timestamps for create and update times, and set collection name to "users"
+

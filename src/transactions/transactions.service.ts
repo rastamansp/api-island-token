@@ -4,14 +4,17 @@ import { Transaction } from './interfaces/transactions.interface';
 import { Model } from 'mongoose';
 import { UsersService } from 'src/users/users.service';
 import { CreateTransactionAccountDto } from './dtos/create-transaction-account.dto';
+import { AccountsService } from 'src/accounts/accounts.service';
+import { Account } from 'src/accounts/interfaces/accounts.interface';
 
 
 @Injectable()
 export class TransactionsService {
 
     constructor(
-        @InjectModel('Transactions') private readonly accountModel: Model<Transaction>,
-        private readonly usersService: UsersService) { }
+        @InjectModel('Transactions') private readonly transactionsModel: Model<Transaction>,
+        private readonly usersService: UsersService,
+        private readonly accountService: AccountsService) { }
 
     private readonly logger = new Logger(TransactionsService.name);
 
@@ -24,19 +27,8 @@ export class TransactionsService {
      */
     async listAllTransactions(): Promise<Transaction[]> {
         // List all Transactions
-        const transactions = await this.accountModel.find().populate("User").exec();
+        const transactions = await this.transactionsModel.find().populate("User").exec();
         this.logger.log(`Listing Transaction with data: ${JSON.stringify(transactions)}`);
-
-        let user;
-        transactions.forEach(async transaction => {
-
-            this.logger.log(`Listing users with data: ${JSON.stringify(transaction.userID)}`);
-
-            user = await this.usersService.findUserById(transaction.userID);
-
-            this.logger.log(`Listing user with data: ${JSON.stringify(user)}`);
-
-        });
 
 
         if (!transactions) {
@@ -54,9 +46,9 @@ export class TransactionsService {
      * @returns The account with the specified ID
      * @throws NotFoundException if no account with the specified ID is found
      */
-    async findAccountById(_id: string): Promise<Transaction> {
+    async findAccountById(_id: string): Promise<Account> {
         // Find user by ID
-        const foundAccount = await this.accountModel.findOne({ _id }).exec();
+        const foundAccount = await this.accountService.findAccountById(_id);
 
         if (!foundAccount) {
             // If no Account found, throw an error
@@ -82,19 +74,21 @@ export class TransactionsService {
      * Create a new Transaction Account
      *
      * @param createAccountDto DTO with data for the new user
-     * @returns The newly created user
-     * @throws BadRequestException if a user with the same email already exists
+     * @returns The newly created Transaction
+     * @throws BadRequestException if a Params its wrong
      */
     async createAccountTransaction(createTransactionAccountDto: CreateTransactionAccountDto): Promise<Transaction> {
 
         const { sourceAccount, destinationAccount } = createTransactionAccountDto;
+        this.logger.log(`sourceAccount: ${JSON.stringify(createTransactionAccountDto)}`);
+        this.logger.log(`${JSON.stringify(destinationAccount)}`, `destinationAccount: `);
 
-        const foundSourceAccount = await this.accountModel.findById(sourceAccount).exec();
-        const foundDestinationAccount = await this.accountModel.findById(destinationAccount).exec();
+        const foundSourceAccount = await this.accountService.findAccountById(sourceAccount);
+        const foundDestinationAccount = await this.accountService.findAccountById(destinationAccount);
         const foundSourceUser = await this.usersService.findUserById(foundSourceAccount.userID);
         const foundDestinationUser = await this.usersService.findUserById(foundDestinationAccount.userID);
-
-        this.logger.log(`${JSON.stringify(foundSourceAccount)}`, `foundSourceAccount: `);
+        
+        this.logger.log(`foundSourceAccount: ${JSON.stringify(foundSourceAccount)}`);
 
         if (!foundSourceAccount) {
             // If a Source Account not exists, throw an error
@@ -113,7 +107,7 @@ export class TransactionsService {
             throw new BadRequestException(`Destination User Account with userID ${foundDestinationUser} not exists`)
         }
 
-        const createdTransactionAccount = new this.accountModel(createTransactionAccountDto);
+        const createdTransactionAccount = new this.transactionsModel(createTransactionAccountDto);
         return await createdTransactionAccount.save();
 
     }

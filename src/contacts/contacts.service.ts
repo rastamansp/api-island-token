@@ -124,9 +124,7 @@ export class ContactsService {
     console.log("contact:", JSON.stringify(contact));
 
     // Update user with new data
-    //await this.contactModel.updateOne({ _id: id }, { $set: updateContactDto }).exec();
     await this.contactModel.findOneAndUpdate({ _id: id }, { $set: updateContactDto }).exec()
-
   }
 
 }

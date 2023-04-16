@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { Transaction } from 'src/transactions/interfaces/transactions.interface';
 import { User } from 'src/users/interfaces/user.interface';
 
 /**
@@ -23,18 +24,5 @@ export interface Account extends Document {
      * @type {User}
      */
     user: User;
-    /**
-     * The user's name, which is a non-required field.
-     * @type {Array<Transaction>}
-     */
-    readonly transactions: Array<Transaction>;
     
-}
-
-export interface Transaction {
-    transactionId: string;
-    type: string;
-    amount: number;
-    description: string;
-    date: Date;
 }

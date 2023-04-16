@@ -8,6 +8,7 @@ import { AccountsModule } from './accounts/accounts.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { ContactSchema } from './contacts/interfaces/contacts.schema';
 import { UserSchema } from './users/interfaces/users.schema';
+import { TransactionsModule } from './transactions/transactions.module';
 
 
 /**
@@ -32,7 +33,8 @@ import { UserSchema } from './users/interfaces/users.schema';
     DesafiosModule,
     UsersModule,
     AccountsModule,
-    ContactsModule
+    ContactsModule,
+    TransactionsModule
   ],
   controllers: [],
   providers: [],
