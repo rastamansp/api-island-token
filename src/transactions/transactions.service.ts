@@ -27,7 +27,7 @@ export class TransactionsService {
      */
     async listAllTransactions(): Promise<Transaction[]> {
         // List all Transactions
-        const transactions = await this.transactionsModel.find().populate("User").exec();
+        const transactions = await this.transactionsModel.find().exec();
         this.logger.log(`Listing Transaction with data: ${JSON.stringify(transactions)}`);
 
 
